@@ -1,0 +1,93 @@
+# least loops implementation
+def bubblesort_least_loops(sort_array):
+    swaps = 0
+    # print(type(sort_array))
+    for key in range(len(sort_array)):
+        # # loop through the array
+        for j in range(len(sort_array[key:])):
+
+            if (j != len(sort_array[key:]) - 1):
+                if sort_array[j] > sort_array[j + 1]:
+                    # swapping
+                    temp = sort_array[j]
+                    sort_array[j] = sort_array[j + 1]
+                    sort_array[j + 1] = temp
+                    swaps += 1
+
+    return swaps, sort_array
+
+
+# print(bubblesort([29,8,22,7,9,31,5,13]))
+
+# Maximum loops implementation
+def bubblesort_max_loops(sort_array):
+    """
+    :param sort_array:
+    :return:
+    """
+    swaps = 0
+    # print(type(sort_array))
+    for key in range(len(sort_array)):
+        # # loop through the array
+        for j in range(len(sort_array[key:])):
+            if (j != len(sort_array[key:]) - 1):
+                if sort_array[j] > sort_array[j + 1]:
+                    # swapping
+                    temp = sort_array[j]
+                    sort_array[j] = sort_array[j + 1]
+                    sort_array[j + 1] = temp
+                    swaps += 1
+    return swaps, sort_array
+
+
+# print(bubblesort([29, 8, 22, 7, 9, 31, 5, 13]))
+
+
+
+def bubblesort_recursion(sort_array, swaps, sorted_array):
+    """recursion implementation
+    :param sort_array:
+    :return:
+    """
+    # stopping criteria
+    if len(sort_array) == 1:
+        sorted_array.append(sort_array[0])
+        return swaps, sorted_array
+    # # loop through the array
+    for j in range(len(sort_array[0:-1])):
+        if sort_array[j] < sort_array[j + 1]:
+            # swapping
+            temp = sort_array[j]
+            sort_array[j] = sort_array[j + 1]
+            sort_array[j + 1] = temp
+            swaps += 1
+    sorted_array.append(sort_array[-1])
+    #recurse
+    return bubblesort_recursion(sort_array[0:-1], swaps, sorted_array)
+
+
+
+
+# unit tests
+import unittest
+
+class MyTestCase(unittest.TestCase):
+    def test_bubblesort_recursion(self):
+
+        sorted=bubblesort_recursion([29, 8, 22, 7, 9, 31, 5, 13], 0, [])
+        self.assertListEqual(sorted[1],[5, 7, 8, 9, 13, 22, 29, 31])
+        self.assertEqual(sorted[0],12)
+
+    def test_bubblesort_least_loops(self):
+        sorted=bubblesort_least_loops([29, 8, 22, 7, 9, 31, 5, 13])
+        self.assertListEqual(sorted[1],[5, 7, 8, 9, 13, 22, 29,31])
+        self.assertEqual(sorted[0],16)
+
+    def test_bubblesort_max_loops(self):
+        sorted=bubblesort_max_loops([29, 8, 22, 7, 9, 31, 5, 13])
+        self.assertListEqual(sorted[1],[5, 7, 8, 9, 13, 22, 29,31])
+        self.assertEqual(sorted[0],16)
+
+
+if __name__ == '__main__':
+      unittest.main()
